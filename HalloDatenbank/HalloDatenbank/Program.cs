@@ -22,6 +22,26 @@ namespace HalloDatenbank
                 IEnumerable<Employee> emps = GetAllEmployees(con);
                 ShowEmployees(emps);
 
+                foreach (var em in emps)
+                {
+                    var cmd = con.CreateCommand();
+                    cmd.CommandText = "UPDATE Employees SET BirthDate=@newBDate WHERE EmployeeID=@id";
+                    cmd.Parameters.AddWithValue("@id", em.Id);
+                    cmd.Parameters.AddWithValue("@newBDate", em.BirthDate.AddYears(1));
+                    int affectedRows = cmd.ExecuteNonQuery();
+
+                    if (affectedRows == 0)
+                        Console.WriteLine($"{em.FirstName} wurde nicht jünger gemacht");
+                    else if (affectedRows == 1)
+                        Console.WriteLine($"{em.FirstName} wurde jünger gemacht");
+                    else
+                        Console.WriteLine("PANIK!!!");
+
+                }
+
+                ShowEmployees(GetAllEmployees(con));
+
+
                 //SearchEmployee(con);
 
             } // con.Dispose(); // --> con.Close();
