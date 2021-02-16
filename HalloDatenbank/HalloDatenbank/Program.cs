@@ -22,21 +22,38 @@ namespace HalloDatenbank
                 IEnumerable<Employee> emps = GetAllEmployees(con);
                 ShowEmployees(emps);
 
-                foreach (var em in emps)
+                int counter = 0;
+                SqlTransaction trans = con.BeginTransaction();
+                try
                 {
-                    var cmd = con.CreateCommand();
-                    cmd.CommandText = "UPDATE Employees SET BirthDate=@newBDate WHERE EmployeeID=@id";
-                    cmd.Parameters.AddWithValue("@id", em.Id);
-                    cmd.Parameters.AddWithValue("@newBDate", em.BirthDate.AddYears(1));
-                    int affectedRows = cmd.ExecuteNonQuery();
+                    foreach (var em in emps)
+                    {
+                        var cmd = con.CreateCommand();
+                        cmd.Transaction = trans;
 
-                    if (affectedRows == 0)
-                        Console.WriteLine($"{em.FirstName} wurde nicht jünger gemacht");
-                    else if (affectedRows == 1)
-                        Console.WriteLine($"{em.FirstName} wurde jünger gemacht");
-                    else
-                        Console.WriteLine("PANIK!!!");
+                        cmd.CommandText = "UPDATE Employees SET BirthDate=@newBDate WHERE EmployeeID=@id";
+                        cmd.Parameters.AddWithValue("@id", em.Id);
+                        cmd.Parameters.AddWithValue("@newBDate", em.BirthDate.AddYears(1));
+                        int affectedRows = cmd.ExecuteNonQuery();
 
+                        //if (counter++ == 4)
+                        //    throw new ExecutionEngineException();
+
+
+                        if (affectedRows == 0)
+                            Console.WriteLine($"{em.FirstName} wurde nicht jünger gemacht");
+                        else if (affectedRows == 1)
+                            Console.WriteLine($"{em.FirstName} wurde jünger gemacht");
+                        else
+                            Console.WriteLine("PANIK!!!");
+                    }
+                    trans.Commit();
+                    Console.WriteLine("OK: Transaktion wurde ausgeführt");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"FEHLER: Transaktion wurde zurückgerollt ({ex.Message})");
+                    trans.Rollback();
                 }
 
                 ShowEmployees(GetAllEmployees(con));
