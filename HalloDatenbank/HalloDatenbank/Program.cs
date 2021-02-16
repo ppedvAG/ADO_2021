@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 
 namespace HalloDatenbank
@@ -18,33 +19,46 @@ namespace HalloDatenbank
                 Console.WriteLine("Datenbankverbindung wurde hergestellt");
 
                 ShowEmployeeCount(con);
-                ShowAllEmployees(con);
+                IEnumerable<Employee> emps = GetAllEmployees(con);
+                ShowEmployees(emps);
 
-                Console.WriteLine("Suche: ");
-                string suche = Console.ReadLine();
-
-                var cmd = con.CreateCommand();
-                //BÖSE wegen SQL Injections: ;CREATE DATABASE HACKED;---
-                //cmd.CommandText = "SELECT * FROM Employees WHERE FirstName LIKE '" + suche + "%'"; 
-
-                cmd.CommandText = "SELECT * FROM Employees WHERE FirstName LIKE @search";
-                cmd.Parameters.AddWithValue("@search", suche+"%");
-
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    var fName = reader.GetString(reader.GetOrdinal("FirstName"));
-                    var lName = reader.GetString(reader.GetOrdinal("LastName"));
-                    var bdate = reader.GetDateTime(reader.GetOrdinal("BirthDate"));
-                    Console.WriteLine($"{fName} {lName} {bdate:d}");
-                }
-
+                //SearchEmployee(con);
 
             } // con.Dispose(); // --> con.Close();
 
 
             Console.WriteLine("Ende");
             Console.ReadLine();
+        }
+
+        private static void ShowEmployees(IEnumerable<Employee> emps)
+        {
+            foreach (var em in emps)
+            {
+                Console.WriteLine($"{em.Id} {em.FirstName} {em.LastName} {em.BirthDate:d}");
+            }
+        }
+
+        private static void SearchEmployee(SqlConnection con)
+        {
+            Console.WriteLine("Suche: ");
+            string suche = Console.ReadLine();
+
+            var cmd = con.CreateCommand();
+            //BÖSE wegen SQL Injections: ';CREATE DATABASE HACKED;--
+            //cmd.CommandText = "SELECT * FROM Employees WHERE FirstName LIKE '" + suche + "%'"; 
+
+            cmd.CommandText = "SELECT * FROM Employees WHERE FirstName LIKE @search";
+            cmd.Parameters.AddWithValue("@search", suche + "%");
+
+            var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                var fName = reader.GetString(reader.GetOrdinal("FirstName"));
+                var lName = reader.GetString(reader.GetOrdinal("LastName"));
+                var bdate = reader.GetDateTime(reader.GetOrdinal("BirthDate"));
+                Console.WriteLine($"{fName} {lName} {bdate:d}");
+            }
         }
 
         private static void ShowEmployeeCount(SqlConnection con)
@@ -60,21 +74,32 @@ namespace HalloDatenbank
             Console.WriteLine($"Es sind {countAsInt} Employees in der Datenbank"); //string interpolation
         }
 
-        private static void ShowAllEmployees(SqlConnection con)
+        private static IEnumerable<Employee> GetAllEmployees(SqlConnection con)
         {
             SqlCommand cmd = con.CreateCommand();
             cmd.CommandText = "SELECT * FROM Employees";
+            var result = new List<Employee>();
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    int id = reader.GetInt32(0);
-                    string lastName = reader.GetString(1);
-                    string firstName = (string)reader["FirstName"];
-                    DateTime birthDate = reader.GetDateTime(reader.GetOrdinal("BirthDate"));
-                    Console.WriteLine($"{id} {firstName} {lastName} {birthDate:d}");
+                    var employee = new Employee();
+                    employee.Id = reader.GetInt32(0);
+                    employee.LastName = reader.GetString(1);
+                    employee.FirstName = (string)reader["FirstName"];
+                    employee.BirthDate = reader.GetDateTime(reader.GetOrdinal("BirthDate"));
+                    result.Add(employee);
                 }
             } //.. -> reader.Closer();
+            return result;
         }
+    }
+
+    class Employee
+    {
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
     }
 }
