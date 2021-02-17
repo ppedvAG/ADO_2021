@@ -1,7 +1,9 @@
 ﻿using Bogus;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
+using Tools;
 
 namespace HalloLinq
 {
@@ -27,6 +29,27 @@ namespace HalloLinq
         private void button1_Click(object sender, EventArgs e)
         {
             dataGridView1.DataSource = personen;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var query = from p in personen
+                        where p.GebDatum.Year >= 1990 && p.Stadt.StartsWith("B")
+                        orderby p.GebDatum.Year descending, p.Nachname
+                        select p;
+
+            dataGridView1.DataSource = query.ToList();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            int kw = DateTime.Now.GetKW(); //erweiterungsmethode
+
+            dataGridView1.DataSource = personen.Where(p => p.GebDatum.Year >= 1990 && p.Stadt.StartsWith("B"))
+                                               .OrderByDescending(nichtP => nichtP.GebDatum.Year)
+                                               .ThenBy(x => x.Nachname)
+                                               .ToList();
+
         }
     }
 }

@@ -58,27 +58,29 @@ namespace HalloLinq
             this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button2.Location = new System.Drawing.Point(143, 3);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(86, 35);
+            this.button2.Size = new System.Drawing.Size(250, 35);
             this.button2.TabIndex = 0;
-            this.button2.Text = "button1";
+            this.button2.Text = "Alle ab GebJahr 1990 QUERY";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
             this.button3.AutoSize = true;
             this.button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button3.Location = new System.Drawing.Point(235, 3);
+            this.button3.Location = new System.Drawing.Point(399, 3);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(86, 35);
+            this.button3.Size = new System.Drawing.Size(266, 35);
             this.button3.TabIndex = 0;
-            this.button3.Text = "button1";
+            this.button3.Text = "Alle ab GebJahr 1990 LAMBDA";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
             this.button4.AutoSize = true;
             this.button4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button4.Location = new System.Drawing.Point(327, 3);
+            this.button4.Location = new System.Drawing.Point(671, 3);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(86, 35);
             this.button4.TabIndex = 0;
@@ -89,7 +91,7 @@ namespace HalloLinq
             // 
             this.button5.AutoSize = true;
             this.button5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button5.Location = new System.Drawing.Point(419, 3);
+            this.button5.Location = new System.Drawing.Point(763, 3);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(86, 35);
             this.button5.TabIndex = 0;
@@ -109,7 +111,7 @@ namespace HalloLinq
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(772, 41);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1144, 41);
             this.flowLayoutPanel1.TabIndex = 1;
             // 
             // dataGridView1
@@ -120,7 +122,7 @@ namespace HalloLinq
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 62;
             this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(772, 519);
+            this.dataGridView1.Size = new System.Drawing.Size(1144, 614);
             this.dataGridView1.TabIndex = 2;
             // 
             // Form1
@@ -128,7 +130,7 @@ namespace HalloLinq
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(772, 560);
+            this.ClientSize = new System.Drawing.Size(1144, 655);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
