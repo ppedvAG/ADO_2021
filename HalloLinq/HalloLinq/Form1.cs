@@ -51,5 +51,33 @@ namespace HalloLinq
                                                .ToList();
 
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var personMitAllenNachnamen = personen.Aggregate((a, b) => new Person() { Vorname = "NEU", Nachname = $"{a.Nachname}-{b.Nachname}" });
+
+            var count = personen.Count(x => x.GebDatum.Month == 5);
+            MessageBox.Show($"Mai gebtag: {count}");
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var person = personen.FirstOrDefault(x => x.GebDatum.Month == 3);
+            if (person != null)
+            {
+                MessageBox.Show(person.Nachname);
+                bool istDrin = personen.Contains(person);
+                bool hatEinerImMaiGebTag = personen.All(x => x.GebDatum.Month == 5);
+
+                IEnumerable<DateTime> alleGebTage = personen.Select(x => x.GebDatum);
+
+
+                var groups = personen.GroupBy(x => x.GebDatum.Month);
+
+
+            }
+            else
+                MessageBox.Show("Nix");
+        }
     }
 }
