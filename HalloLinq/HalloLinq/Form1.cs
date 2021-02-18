@@ -24,6 +24,9 @@ namespace HalloLinq
                             .RuleFor(x => x.GebDatum, f => f.Date.Past(50));
 
             personen.AddRange(faker.Generate(100));
+
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -70,14 +73,35 @@ namespace HalloLinq
                 bool hatEinerImMaiGebTag = personen.All(x => x.GebDatum.Month == 5);
 
                 IEnumerable<DateTime> alleGebTage = personen.Select(x => x.GebDatum);
-
-
                 var groups = personen.GroupBy(x => x.GebDatum.Month);
 
 
             }
             else
                 MessageBox.Show("Nix");
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var ano = new { Ding = 7, AnderesDings = "lalala" };
+
+            var query1 = from p in personen
+                         select new { Geb = p.GebDatum, Monat = p.GebDatum.Month };
+
+            var query2 = personen.Select(x => new { Geb = x.GebDatum, Monat = x.GebDatum.Month });
+
+            dataGridView1.DataSource = query1.ToList();
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.CurrentRow != null)
+            {
+                if( dataGridView1.CurrentRow.DataBoundItem is Person p)
+                {
+                    MessageBox.Show(p.Nachname);
+                }
+            }
         }
     }
 }

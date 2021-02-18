@@ -35,6 +35,7 @@ namespace HalloLinq
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.button6 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -94,7 +95,7 @@ namespace HalloLinq
             this.button5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.button5.Location = new System.Drawing.Point(845, 3);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(99, 26);
+            this.button5.Size = new System.Drawing.Size(132, 35);
             this.button5.TabIndex = 0;
             this.button5.Text = "FirstOrDefault";
             this.button5.UseVisualStyleBackColor = true;
@@ -110,11 +111,24 @@ namespace HalloLinq
             this.flowLayoutPanel1.Controls.Add(this.button3);
             this.flowLayoutPanel1.Controls.Add(this.button4);
             this.flowLayoutPanel1.Controls.Add(this.button5);
+            this.flowLayoutPanel1.Controls.Add(this.button6);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1144, 41);
             this.flowLayoutPanel1.TabIndex = 1;
+            // 
+            // button6
+            // 
+            this.button6.AutoSize = true;
+            this.button6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button6.Location = new System.Drawing.Point(983, 3);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(151, 35);
+            this.button6.TabIndex = 1;
+            this.button6.Text = "Select (Anonym)";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // dataGridView1
             // 
@@ -126,6 +140,7 @@ namespace HalloLinq
             this.dataGridView1.RowTemplate.Height = 28;
             this.dataGridView1.Size = new System.Drawing.Size(1144, 614);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
             // Form1
             // 
@@ -156,6 +171,7 @@ namespace HalloLinq
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button6;
     }
 }
 
