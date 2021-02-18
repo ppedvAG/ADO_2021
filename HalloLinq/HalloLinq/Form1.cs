@@ -91,7 +91,11 @@ namespace HalloLinq
             var query2 = personen.Select(x => new { Geb = x.GebDatum, Monat = x.GebDatum.Month });
 
             dataGridView1.DataSource = query1.ToList();
-        }
+
+
+                    }
+
+  
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
